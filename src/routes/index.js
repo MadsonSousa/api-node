@@ -18,7 +18,15 @@ router.use(auth)
 
 
 function verifyJWT (req, res, next) {
-  var token = req.headers['x-access-token']
+  const authorization = req.headers['authorization']
+
+  if (!authorization) {
+    res.sendStatus(403)
+  }
+  
+  const bearer = authorization.split(' ')
+  const token = bearer[1]
+
   if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' })
   
   jwt.verify(token, process.env.SECRET, function(err, decoded) {
