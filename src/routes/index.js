@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const usuarios = require('./usuarios')
-const auth = require('../util/auth')
+const login = require('./login')
 const jwt = require('jsonwebtoken')
 require("dotenv-safe").load()
 
@@ -14,7 +14,7 @@ router.get('/', function (req, res, next) {
 })
 
 router.use('/usuarios', verifyJWT, usuarios)
-router.use(auth)
+router.use(login)
 
 
 function verifyJWT (req, res, next) {
