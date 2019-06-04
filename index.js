@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const routes = require('./src/routes/index')
 
 app.listen(3000, () => {
-    console.log('server is running in port: 3000...')
+  console.log('server is running in port: 3000...')
 })
 
 app.use(bodyParser.text())
