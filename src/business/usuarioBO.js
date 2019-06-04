@@ -1,4 +1,4 @@
-const usuarios = [
+const usuariosBD = [
   {
     id_usuario: 1,
     nome: 'Joao da Silva',
@@ -20,19 +20,31 @@ const usuarios = [
 ]
 
 function findAll () {
-  return usuarios
+  return new Promise((resolve, reject) => {
+    try {
+      resolve(usuariosBD)
+    } catch (error) {
+      reject(error)
+    }
+  })
 }
 
 function findByEmail (usuario) {
-  const usuarios = findAll()
-  const user = usuarios.find( u => u.email === usuario.email )
+  return new Promise((resolve, reject) => {
+    findAll()
+      .then((usuarios) => {
+        const user = usuarios.find(u => u.email === usuario.email)
 
-  if (!user) {
-    throw new Error('UserNotFound')
-  }
-  return user
+        if (!user) {
+          reject(new Error('UserNotFound'))
+        }
+        resolve(user)
+      })
+      .catch((error) => {
+        reject(error)
+      })
+  })
 }
-
 
 module.exports = {
   findAll,
